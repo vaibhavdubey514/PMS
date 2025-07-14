@@ -117,29 +117,5 @@ button:hover {
         </div>
     </div>
 
-    <script>
-        function validateLogin() {
-            const userId = document.getElementById("userId");
-            const password = document.getElementById("password");
-
-            userId.classList.remove("is-invalid");
-            password.classList.remove("is-invalid");
-
-            let isValid = true;
-
-            if (userId.value.length < 5 || userId.value.length > 15) {
-                userId.classList.add("is-invalid");
-                isValid = false;
-            }
-
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{1,30}$/;
-            if (!passwordRegex.test(password.value)) {
-                password.classList.add("is-invalid");
-                isValid = false;
-            }
-
-            return isValid;
-        }
-    </script>
 </body>
 </html>
