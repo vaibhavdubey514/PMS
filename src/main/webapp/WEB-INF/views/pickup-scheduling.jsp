@@ -215,27 +215,39 @@ if ("Customer".equals(request.getAttribute("role"))) {
 	</tbody>
 </table>
 
+<%
+    String status = ((String) request.getAttribute("parcelStatus")).trim().toLowerCase();
+    boolean isCancelled = "cancelled".equals(status);
+%>
+
 <div class="update-form">
-	<form action="<%=request.getContextPath()%>/pickup-scheduling" method="post" onsubmit="return validateDeliveryTimes()">
-		<input type="hidden" name="bookingIdValue" value="<%=request.getAttribute("bookingId")%>" readonly />
+    <% if (!isCancelled) { %>
+        <form action="<%=request.getContextPath()%>/pickup-scheduling" method="post" onsubmit="return validateDeliveryTimes()">
+            <input type="hidden" name="bookingIdValue" value="<%=request.getAttribute("bookingId")%>" readonly />
 
-		<div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-			<div>
-				<label for="parcelPickupTime">Pickup Time</label><br/>
-				<input type="datetime-local" name="parcelPickupTime" id="parcelPickupTime" required />
-			</div>
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <div>
+                    <label for="parcelPickupTime">Pickup Time</label><br/>
+                    <input type="datetime-local" name="parcelPickupTime" id="parcelPickupTime" required />
+                </div>
 
-			<div>
-				<label for="parcelDropoffTime">Dropoff Time</label><br/>
-				<input type="datetime-local" name="parcelDropoffTime" id="parcelDropoffTime" required />
-			</div>
-		</div>
+                <div>
+                    <label for="parcelDropoffTime">Dropoff Time</label><br/>
+                    <input type="datetime-local" name="parcelDropoffTime" id="parcelDropoffTime" required />
+                </div>
+            </div>
 
-		<div style="margin-top: 20px; text-align: center;">
-			<button type="submit" onclick="confirmUpdate(event)">Update</button>
-		</div>
-	</form>
+            <div style="margin-top: 20px; text-align: center;">
+                <button type="submit" onclick="confirmUpdate(event)">Update</button>
+            </div>
+        </form>
+    <% } else { %>
+        <div style="text-align: center; background-color: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; font-weight: bold;">
+            Cannot be edited for Cancelled parcel.
+        </div>
+    <% } %>
 </div>
+
 <% } %>
 <% } %>
 
@@ -287,6 +299,8 @@ if ("Customer".equals(request.getAttribute("role"))) {
 		if (!dropoff.value || dropoffTime <= pickupTime) {
 			pickup.classList.add("is-invalid");
 			dropoff.classList.add("is-invalid");
+			
+			alert("Dropoff time must be after Pickup time.");
 			return false;
 		}
 		return true;
