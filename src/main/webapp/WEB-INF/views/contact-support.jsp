@@ -91,35 +91,7 @@ if (session.getAttribute("name") == null) {
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
-    <nav>
-        <ul>
-            <%
-            if ("Customer".equals(request.getAttribute("role"))) {
-            %>
-            <li><a href="<%=request.getContextPath()%>/">Home</a></li>
-            <li><a href="<%=request.getContextPath()%>/booking-service">Booking Service</a></li>
-            <li><a href="<%=request.getContextPath()%>/invoice">Invoice</a></li>
-            <li><a href="<%=request.getContextPath()%>/tracking">Tracking</a></li>
-            <li><a href="<%=request.getContextPath()%>/previous-booking">Previous Booking</a></li>
-            <li><a href="<%=request.getContextPath()%>/contact-support">Contact Support</a></li>
-            <li><a href="<%=request.getContextPath()%>/logout">Logout</a></li>
-            <%
-            } else {
-            %>
-            <li><a href="<%=request.getContextPath()%>/">Home</a></li>
-            <li><a href="<%=request.getContextPath()%>/booking-service">Booking Service</a></li>
-            <li><a href="<%=request.getContextPath()%>/invoice">Invoice</a></li>
-            <li><a href="<%=request.getContextPath()%>/tracking">Tracking</a></li>
-            <li><a href="<%=request.getContextPath()%>/previous-booking">Previous Booking</a></li>
-            <li><a href="<%=request.getContextPath()%>/delivery-status">Delivery Status</a></li>
-            <li><a href="<%=request.getContextPath()%>/pickup-scheduling">Pickup Scheduling</a></li>
-            <li><a href="<%=request.getContextPath()%>/logout">Logout</a></li>
-            <%
-            }
-            %>
-        </ul>
-    </nav>
+<jsp:include page="navbar.jsp" />
 
     <!-- CONTACT SUPPORT CONTENT -->
     <h3>Contact Support</h3>
@@ -131,11 +103,11 @@ if (session.getAttribute("name") == null) {
         </div>
         <div>
             <h6>Contact:</h6>
-            <p>+91 7665774129</p>
+            <p>+91 8527419632</p>
         </div>
         <div>
             <h6>Address:</h6>
-            <p>Assotech Business Cresterra, Tower 2, Noida Sector-135</p>
+            <p>TCS Synergy Park, Gachibowli</p>
         </div>
     </div>
 
