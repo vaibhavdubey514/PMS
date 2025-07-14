@@ -320,18 +320,33 @@ button:hover {
 
 <script>
 // Set min date for pickup/dropoff
+// Set min date for pickup/dropoff
 document.addEventListener("DOMContentLoaded", function() {
 	const pickup = document.getElementById("parcelPickupTime");
 	const dropoff = document.getElementById("parcelDropoffTime");
+
 	const now = new Date();
+	now.setMinutes(now.getMinutes() + 1); // add 1 minute to avoid immediate past
 	const year = now.getFullYear();
 	const month = String(now.getMonth() + 1).padStart(2, '0');
-	const day = String(now.getDate() + 1).padStart(2, '0');
+	const day = String(now.getDate()).padStart(2, '0');
 	const hours = String(now.getHours()).padStart(2, '0');
 	const minutes = String(now.getMinutes()).padStart(2, '0');
-	const minDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-	pickup.min = minDate;
-	dropoff.min = minDate;
+	const minDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+	pickup.min = minDateTime;
+	dropoff.min = minDateTime;
+
+	pickup.addEventListener("change", function () {
+		const pickupTime = pickup.value;
+		if (pickupTime) {
+			// Ensure drop-off can't be earlier than pickup
+			dropoff.min = pickupTime;
+			if (dropoff.value < pickupTime) {
+				dropoff.value = ""; // Reset drop-off if invalid
+			}
+		}
+	});
 });
 
 // Cost Calculation
@@ -353,8 +368,15 @@ function calculateServiceCost() {
 
 document.getElementById("booking-form").addEventListener("input", calculateServiceCost);
 
-// Simple final form validation
+// Final form validation to prevent invalid date range
 function validateBooking() {
+	const pickup = document.getElementById("parcelPickupTime").value;
+	const dropoff = document.getElementById("parcelDropoffTime").value;
+
+	if (pickup && dropoff && dropoff <= pickup) {
+		alert("Dropoff time must be after Pickup time.");
+		return false;
+	}
 	return true;
 }
 </script>
