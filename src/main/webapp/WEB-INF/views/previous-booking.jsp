@@ -270,7 +270,7 @@ if (session.getAttribute("name") == null) {
 	<form action="<%=request.getContextPath()%>/previous-booking" method="post" onsubmit="return validateForm()">
 		<div class="form-group">
 			<label for="userId">User ID</label>
-			<input type="text" id="userId" name="userId" placeholder="Enter User ID" minlength="5" maxlength="15" required />
+			<input type="text" id="userId" name="userId" placeholder="Enter User ID" required />
 		</div>
 		<div class="form-group">
 			<label for="startDate">Start Date</label>
@@ -337,8 +337,8 @@ if (session.getAttribute("name") == null) {
 			const startDate = new Date(document.getElementById("startDate").value);
 			const endDate = new Date(document.getElementById("endDate").value);
 
-			if (userId.value.length < 5 || userId.value.length > 15) {
-				alert("User ID must be between 5 and 15 characters.");
+			if (userId.value.length < 3 || userId.value.length > 15) {
+				alert("User ID must be between 3 and 15 characters.");
 				return false;
 			}
 			if (startDate > endDate) {
