@@ -236,6 +236,10 @@ if ("success".equals(request.getAttribute("status"))) {
 	</tbody>
 </table>
 
+<%
+String status = (String) request.getAttribute("parcelStatus");
+if (status != null && !status.equalsIgnoreCase("Cancelled")) {
+%>
 <form action="<%=request.getContextPath()%>/delivery-status" method="post">
 	<div class="form-group">
 		<input type="hidden" name="bookingIdValue" value="<%=request.getAttribute("bookingId")%>" />
@@ -253,6 +257,16 @@ if ("success".equals(request.getAttribute("status"))) {
 		<button class="tracking-form-container button" type="submit" onclick="confirmUpdate(event)" style="padding: 10px 18px; background-color: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Update</button>
 	</div>
 </form>
+<%
+} else if (status != null && status.equalsIgnoreCase("Cancelled")) {
+%>
+	<div class="form-group">
+		<div class="alert alert-danger">Status is <strong>Cancelled</strong>. Cannot be edited.</div>
+	</div>
+<%
+}
+%>
+
 <%
 }
 %>
